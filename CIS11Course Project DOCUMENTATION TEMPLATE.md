@@ -21,7 +21,7 @@
 
 <small>Currently, students or users manually calculate their test statistics—minimum, maximum, average scores—and determine the corresponding letter grade using a calculator. This process can be time-consuming and prone to errors. The introduction of the Test Score Calculator does not change the overall business process of score evaluation, as users still input their test results to understand their academic performance. However, the application streamlines this process by automating calculations and instantly providing accurate results. This saves users time and reduces the risk of mistakes, offering a faster and more reliable way to assess test scores.</small>
 
-## ## User Roles and Responsibilities
+## User Roles and Responsibilities
 
 ## Production Rollout Considerations
 
