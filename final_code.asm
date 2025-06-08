@@ -91,147 +91,132 @@ CALCULATE_STATS
     ; Each block loads a grade, updates sum, checks max/min
     ; The process is repeated for each grade index (1 to 4)
     
-    ; Process grade 2
-    LDR R4, R2, #1
-    LD R5, TOTAL_SUM
-    ADD R5, R5, R4
-    ST R5, TOTAL_SUM
-    
-    ; Check if grade 2 is new max
-    LD R5, MAX_GRADE
-    NOT R5, R5
-    ADD R5, R5, #1
-    ADD R6, R4, R5
-    BRZP SKIP_MAX1
-    ST R4, MAX_GRADE
+    LDR R4, R2, #1           ; Load grade 2 from GRADES into R4
+    LD R5, TOTAL_SUM         ; Load current total sum
+    ADD R5, R5, R4           ; Add grade 2 to total sum
+    ST R5, TOTAL_SUM         ; Store updated sum
+
+    LD R5, MAX_GRADE         ; Load current max grade
+    NOT R5, R5               ; Compute two's complement of max grade
+    ADD R5, R5, #1           
+    ADD R6, R4, R5           ; Compare grade 2 to max
+    BRZP SKIP_MAX1           ; If grade ≤ max, skip update
+    ST R4, MAX_GRADE         ; Else, update max grade
 SKIP_MAX1
-    
-    ; Check if grade 2 is new min
-    LD R5, MIN_GRADE
-    NOT R4, R4
-    ADD R4, R4, #1
-    ADD R6, R5, R4
-    BRZP SKIP_MIN1
-    LDR R4, R2, #1
-    ST R4, MIN_GRADE
+
+    LD R5, MIN_GRADE         ; Load current min grade
+    NOT R4, R4               ; Compute two's complement of grade 2
+    ADD R4, R4, #1           
+    ADD R6, R5, R4           ; Compare min to grade
+    BRZP SKIP_MIN1           ; If grade ≥ min, skip update
+    LDR R4, R2, #1           ; Reload grade 2
+    ST R4, MIN_GRADE         ; Update min grade
 SKIP_MIN1
-    
-    ; Process grade 3
-    LDR R4, R2, #2
-    LD R5, TOTAL_SUM
-    ADD R5, R5, R4
-    ST R5, TOTAL_SUM
-    
-    ; Check if grade 3 is new max
-    LD R5, MAX_GRADE
-    NOT R5, R5
-    ADD R5, R5, #1
-    ADD R6, R4, R5
-    BRZP SKIP_MAX2
-    ST R4, MAX_GRADE
+
+    LDR R4, R2, #2           ; Load grade 3
+    LD R5, TOTAL_SUM         
+    ADD R5, R5, R4           
+    ST R5, TOTAL_SUM         
+
+    LD R5, MAX_GRADE         
+    NOT R5, R5               
+    ADD R5, R5, #1           
+    ADD R6, R4, R5           
+    BRZP SKIP_MAX2           
+    ST R4, MAX_GRADE         
 SKIP_MAX2
-    
-    ; Check if grade 3 is new min
-    LD R5, MIN_GRADE
-    NOT R4, R4
-    ADD R4, R4, #1
-    ADD R6, R5, R4
-    BRZP SKIP_MIN2
-    LDR R4, R2, #2
-    ST R4, MIN_GRADE
+
+    LD R5, MIN_GRADE         
+    NOT R4, R4               
+    ADD R4, R4, #1           
+    ADD R6, R5, R4           
+    BRZP SKIP_MIN2           
+    LDR R4, R2, #2           
+    ST R4, MIN_GRADE         
 SKIP_MIN2
-    
-    ; Process grade 4
-    LDR R4, R2, #3
-    LD R5, TOTAL_SUM
-    ADD R5, R5, R4
-    ST R5, TOTAL_SUM
-    
-    ; Check if grade 4 is new max
-    LD R5, MAX_GRADE
-    NOT R5, R5
-    ADD R5, R5, #1
-    ADD R6, R4, R5
-    BRZP SKIP_MAX3
-    ST R4, MAX_GRADE
+
+    LDR R4, R2, #3           ; Load grade 4
+    LD R5, TOTAL_SUM         
+    ADD R5, R5, R4           
+    ST R5, TOTAL_SUM         
+
+    LD R5, MAX_GRADE         
+    NOT R5, R5               
+    ADD R5, R5, #1           
+    ADD R6, R4, R5           
+    BRZP SKIP_MAX3           
+    ST R4, MAX_GRADE         
 SKIP_MAX3
-    
-    ; Check if grade 4 is new min
-    LD R5, MIN_GRADE
-    NOT R4, R4
-    ADD R4, R4, #1
-    ADD R6, R5, R4
-    BRZP SKIP_MIN3
-    LDR R4, R2, #3
-    ST R4, MIN_GRADE
+
+    LD R5, MIN_GRADE         
+    NOT R4, R4               
+    ADD R4, R4, #1           
+    ADD R6, R5, R4           
+    BRZP SKIP_MIN3           
+    LDR R4, R2, #3           
+    ST R4, MIN_GRADE         
 SKIP_MIN3
-    
-    ; Process grade 5
-    LDR R4, R2, #4
-    LD R5, TOTAL_SUM
-    ADD R5, R5, R4
-    ST R5, TOTAL_SUM
-    
-    ; Check if grade 5 is new max
-    LD R5, MAX_GRADE
-    NOT R5, R5
-    ADD R5, R5, #1
-    ADD R6, R4, R5
-    BRZP SKIP_MAX4
-    ST R4, MAX_GRADE
+
+    LDR R4, R2, #4           ; Load grade 5
+    LD R5, TOTAL_SUM         
+    ADD R5, R5, R4           
+    ST R5, TOTAL_SUM         
+
+    LD R5, MAX_GRADE         
+    NOT R5, R5               
+    ADD R5, R5, #1           
+    ADD R6, R4, R5           
+    BRZP SKIP_MAX4           
+    ST R4, MAX_GRADE         
 SKIP_MAX4
-    
-    ; Check if grade 5 is new min
-    LD R5, MIN_GRADE
-    NOT R4, R4
-    ADD R4, R4, #1
-    ADD R6, R5, R4
-    BRZP SKIP_MIN4
-    LDR R4, R2, #4
-    ST R4, MIN_GRADE
+
+    LD R5, MIN_GRADE         
+    NOT R4, R4               
+    ADD R4, R4, #1           
+    ADD R6, R5, R4           
+    BRZP SKIP_MIN4           
+    LDR R4, R2, #4           
+    ST R4, MIN_GRADE         
 SKIP_MIN4
-    
-    ; Calculate average (divide total by 5)
-    LD R3, TOTAL_SUM
-    AND R4, R4, #0          ; Quotient
+
+    LD R3, TOTAL_SUM         ; Load total of all grades
+    AND R4, R4, #0           ; Clear R4 (quotient)
 AVG_LOOP
-    ADD R5, R3, #-5
-    BRN AVG_DONE
-    ADD R3, R3, #-5
-    ADD R4, R4, #1
+    ADD R5, R3, #-5          ; Subtract 5
+    BRN AVG_DONE             ; If < 0, exit loop
+    ADD R3, R3, #-5          ; Subtract 5 from total
+    ADD R4, R4, #1           ; Increment quotient
     BRnzp AVG_LOOP
 AVG_DONE
-    ST R4, AVERAGE_GRADE
-    
-    ; Display MAX
-    LEA R0, MIN
-    PUTS
-    LD R3, MAX_GRADE
-    AND R1, R1, #0
-    JSR BREAK_INT
-    LD R0, NEWLINE
-    OUT
-    
-    ; Display MIN
-    LEA R0, MAX
-    PUTS
-    LD R3, MIN_GRADE
-    AND R1, R1, #0
-    JSR BREAK_INT
-    LD R0, NEWLINE
-    OUT
-    
-    ; Display AVG
-    LEA R0, AVG
-    PUTS
-    LD R3, AVERAGE_GRADE
-    AND R1, R1, #0
-    JSR BREAK_INT
-    LD R0, NEWLINE
-    OUT
-    
-    LD R7, SAVELOC1
-    RET
+    ST R4, AVERAGE_GRADE     ; Store average
+
+    LEA R0, MIN              ; Load address of "MIN"
+    PUTS                     ; Display "MIN"
+    LD R3, MAX_GRADE         ; Load max grade into R3
+    AND R1, R1, #0           ; Clear R1
+    JSR BREAK_INT            ; Convert and display number
+    LD R0, NEWLINE           
+    OUT                      ; Output newline
+
+    LEA R0, MAX              ; Load address of "MAX"
+    PUTS                     ; Display "MAX"
+    LD R3, MIN_GRADE         ; Load min grade into R3
+    AND R1, R1, #0           
+    JSR BREAK_INT            
+    LD R0, NEWLINE           
+    OUT                      
+
+    LEA R0, AVG              ; Load address of "AVG"
+    PUTS                     ; Display "AVG"
+    LD R3, AVERAGE_GRADE     ; Load average grade
+    AND R1, R1, #0           
+    JSR BREAK_INT            
+    LD R0, NEWLINE           
+    OUT                      
+
+    LD R7, SAVELOC1          ; Restore R7
+    RET                      ; Return from subroutine
+
 
 ; ========== Data ==========
 
