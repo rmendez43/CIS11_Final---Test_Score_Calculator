@@ -323,42 +323,41 @@ PUSH
     ST R6, POINTER           ; Update stack pointer
     LD R7, SAVELOC3          ; Restore return address
     RET
-
-POINTER .FILL X4000
+POINTER .FILL X4000          ; Initial top of stack address
 
 POP
-    LD R6, POINTER
-    ST R1, SAVELOC5
-    LD R1, BASELINE
-    ADD R1, R1, R6
-    BRZP STACK_ERROR
-    LD R1, SAVELOC5
-    LDR R0, R6, #0
-    ST R7, SAVELOC4
-    OUT
-    LD R0, SPACE
-    OUT
-    ADD R6, R6, #1
-    ST R6, POINTER
-    LD R7, SAVELOC4
+    LD R6, POINTER           ; Load current stack pointer
+    ST R1, SAVELOC5          ; Save R1
+    LD R1, BASELINE          ; Load bottom limit of stack
+    ADD R1, R1, R6           
+    BRZP STACK_ERROR         ; If below baseline, error
+    LD R1, SAVELOC5          ; Restore R1
+    LDR R0, R6, #0           ; Load top value into R0
+    ST R7, SAVELOC4          ; Save R7
+    OUT                      ; Output character
+    LD R0, SPACE             
+    OUT                      ; Output space
+    ADD R6, R6, #1           ; Move stack pointer up
+    ST R6, POINTER           ; Update pointer
+    LD R7, SAVELOC4          ; Restore R7
     RET
 
 STACK_ERROR
-    LEA R0, ERROR
-    PUTS
-    HALT
+    LEA R0, ERROR            ; Load error message
+    PUTS                     ; Print error
+    HALT                     ; Halt execution
 
-BASELINE .FILL XC000
-ERROR    .STRINGZ "PROGRAM STOP"
+BASELINE .FILL XC000         ; Lowest legal stack address
+ERROR    .STRINGZ "PROGRAM STOP" ; Error message
 
 GET_LETTER
-    AND R2, R2, #0
+    AND R2, R2, #0           ; Clear R2
 
 A_GRADE
-    LD R0, A_NUM
-    LD R1, A_LET
-    ADD R2, R3, R0
-    BRZP STR_GRADE
+    LD R0, A_NUM             ; Load A-grade threshold (e.g., -90)
+    LD R1, A_LET             ; Load 'A' character
+    ADD R2, R3, R0           ; Compare grade to threshold
+    BRZP STR_GRADE           ; If grade >= threshold, use this letter
 
 B_GRADE
     AND R2, R2, #0
@@ -390,12 +389,13 @@ F_GRADE
     RET
 
 STR_GRADE
-    ST R7, SAVELOC1
-    AND R0, R0, #0
-    ADD R0, R1, #0
-    JSR PUSH
-    LD R7, SAVELOC1
+    ST R7, SAVELOC1          ; Save return address
+    AND R0, R0, #0           
+    ADD R0, R1, #0           ; Move letter into R0
+    JSR PUSH                 ; Push onto stack
+    LD R7, SAVELOC1          ; Restore R7
     RET
+
 
 A_NUM .FILL #-90   ; 90
 A_LET .FILL X41    ; 'A'
