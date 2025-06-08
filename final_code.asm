@@ -20,56 +20,53 @@
     ; 3. Determine letter grade with GET_LETTER
     ; 4. Output letter grade using POP
 
-; This repeated code block below reads five test scores, stores them
-; in memory, calculates the letter grade, and displays it.
+    JSR GET_GRADE            ; Get first test score into R3
+    LEA R6, GRADES           ; Load address of GRADES array into R6
+    STR R3, R6, #0           ; Store score at GRADES[0]
+    JSR GET_LETTER           ; Convert score to letter grade and display
+    JSR POP                  ; Return from subroutine
+    LD R0, NEWLINE           ; Load newline character
+    OUT                      ; Output newline
 
-    JSR GET_GRADE
-    LEA R6, GRADES
-    STR R3, R6, #0
-    JSR GET_LETTER
-    JSR POP
-    LD R0, NEWLINE
-    OUT
+    JSR GET_GRADE            ; Get second test score into R3
+    LEA R6, GRADES           ; Load address of GRADES array into R6
+    LD R5, ONE               ; Load value 1
+    ADD R7, R6, R5           ; Calculate address GRADES[1]
+    STR R3, R7, #0           ; Store score at GRADES[1]
+    JSR GET_LETTER           ; Convert score to letter grade and display
+    JSR POP                  ; Return from subroutine
+    LD R0, NEWLINE           ; Load newline character
+    OUT                      ; Output newline
 
-    JSR GET_GRADE
-    LEA R6, GRADES
-    LD R5, ONE
-    ADD R7, R6, R5
-    STR R3, R7, #0
-    JSR GET_LETTER
-    JSR POP
-    LD R0, NEWLINE
-    OUT
+    JSR GET_GRADE            ; Get third test score into R3
+    LEA R6, GRADES           ; Load address of GRADES array into R6
+    LD R5, TWO               ; Load value 2
+    ADD R7, R6, R5           ; Calculate address GRADES[2]
+    STR R3, R7, #0           ; Store score at GRADES[2]
+    JSR GET_LETTER           ; Convert score to letter grade and display
+    JSR POP                  ; Return from subroutine
+    LD R0, NEWLINE           ; Load newline character
+    OUT                      ; Output newline
 
-    JSR GET_GRADE
-    LEA R6, GRADES
-    LD R5, TWO
-    ADD R7, R6, R5
-    STR R3, R7, #0
-    JSR GET_LETTER
-    JSR POP
-    LD R0, NEWLINE
-    OUT
+    JSR GET_GRADE            ; Get fourth test score into R3
+    LEA R6, GRADES           ; Load address of GRADES array into R6
+    LD R5, THREE             ; Load value 3
+    ADD R7, R6, R5           ; Calculate address GRADES[3]
+    STR R3, R7, #0           ; Store score at GRADES[3]
+    JSR GET_LETTER           ; Convert score to letter grade and display
+    JSR POP                  ; Return from subroutine
+    LD R0, NEWLINE           ; Load newline character
+    OUT                      ; Output newline
 
-    JSR GET_GRADE
-    LEA R6, GRADES
-    LD R5, THREE
-    ADD R7, R6, R5
-    STR R3, R7, #0
-    JSR GET_LETTER
-    JSR POP
-    LD R0, NEWLINE
-    OUT
-
-    JSR GET_GRADE
-    LEA R6, GRADES
-    LD R5, FOUR
-    ADD R7, R6, R5
-    STR R3, R7, #0
-    JSR GET_LETTER
-    JSR POP
-    LD R0, NEWLINE
-    OUT
+    JSR GET_GRADE            ; Get fifth test score into R3
+    LEA R6, GRADES           ; Load address of GRADES array into R6
+    LD R5, FOUR              ; Load value 4
+    ADD R7, R6, R5           ; Calculate address GRADES[4]
+    STR R3, R7, #0           ; Store score at GRADES[4]
+    JSR GET_LETTER           ; Convert score to letter grade and display
+    JSR POP                  ; Return from subroutine
+    LD R0, NEWLINE           ; Load newline character
+    OUT                      ; Output newline
 
     ; Calculate and display statistics
     JSR CALCULATE_STATS
