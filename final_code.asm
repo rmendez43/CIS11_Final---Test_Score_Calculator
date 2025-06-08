@@ -253,75 +253,75 @@ SAVELOC5 .FILL x0000
 ; ========== Subroutines ==========
 
 GET_GRADE
-    ST R7, SAVELOC1
-    JSR CLEAR_REG
-    LD R4, DECODE_DEC
-    GETC
-    JSR VALIDATE2
-    OUT
-    ADD R1, R0, #0
-    ADD R1, R1, R4
-    ADD R2, R2, #10
+    ST R7, SAVELOC1          ; Save return address
+    JSR CLEAR_REG            ; Clear registers R1–R4
+    LD R4, DECODE_DEC        ; Load decimal decoding offset (-48)
+    GETC                     ; Get first character (tens digit)
+    JSR VALIDATE2            ; Validate character is a digit
+    OUT                      ; Echo character to screen
+    ADD R1, R0, #0           ; Copy character to R1
+    ADD R1, R1, R4           ; Convert ASCII to digit
+    ADD R2, R2, #10          ; Set multiplier to 10
 
 MULT10
-    ADD R3, R3, R1
-    ADD R2, R2, #-1
-    BRP MULT10
+    ADD R3, R3, R1           ; R3 += tens digit
+    ADD R2, R2, #-1          ; Decrement counter
+    BRP MULT10               ; Loop 10 times to multiply digit by 10
 
-    GETC
-    JSR VALIDATE2
-    OUT
-    ADD R0, R0, R4
-    ADD R3, R3, R0
-    LD R0, SPACE
-    OUT
-    LD R7, SAVELOC1
-    RET
+    GETC                     ; Get second character (ones digit)
+    JSR VALIDATE2            ; Validate digit
+    OUT                      ; Echo digit
+    ADD R0, R0, R4           ; Convert ASCII to number
+    ADD R3, R3, R0           ; Add ones digit to R3 (final grade)
+    LD R0, SPACE             ; Load space character
+    OUT                      ; Output space
+    LD R7, SAVELOC1          ; Restore return address
+    RET                      ; Return with grade in R3
 
 BREAK_INT
-    ST R7, SAVELOC2
-    LD R5, DECODE_SYM
-    ADD R4, R3, #0
+    ST R7, SAVELOC2          ; Save return address
+    LD R5, DECODE_SYM        ; Load ASCII base ('0')
+    ADD R4, R3, #0           ; Copy grade to R4
 
 DIV1
-    ADD R1, R1, #1
-    ADD R4, R4, #-10
-    BRP DIV1
+    ADD R1, R1, #1           ; Increment quotient
+    ADD R4, R4, #-10         ; Subtract 10 from R4
+    BRP DIV1                 ; Loop until remainder < 10
 
-    ADD R1, R1, #-1
-    ADD R4, R4, #10
-    ADD R6, R4, #-10
-    BRNP POS
+    ADD R1, R1, #-1          ; Adjust quotient
+    ADD R4, R4, #10          ; Adjust remainder
+    ADD R6, R4, #-10         ; Check if remainder is negative
+    BRNP POS                 ; If not, continue
 
 NEG
-    ADD R1, R1, #1
-    ADD R4, R4, #-10
+    ADD R1, R1, #1           ; Fix quotient
+    ADD R4, R4, #-10         ; Fix remainder
 
 POS
-    ST R1, Q
-    ST R4, R
-    LD R0, Q
-    ADD R0, R0, R5
-    OUT
+    ST R1, Q                 ; Store quotient
+    ST R4, R                 ; Store remainder
+    LD R0, Q                
+    ADD R0, R0, R5           ; Convert to ASCII
+    OUT                      ; Output tens digit
     LD R0, R
-    ADD R0, R0, R5
-    OUT
-    LD R7, SAVELOC2
-    RET
+    ADD R0, R0, R5           ; Convert to ASCII
+    OUT                      ; Output ones digit
+    LD R7, SAVELOC2          ; Restore return address
+    RET                      ; Return
 
-Q .FILL X0
-R .FILL X0
+Q .FILL X0                   ; Storage for quotient
+R .FILL X0                   ; Storage for remainder
 
 PUSH
-    ST R7, SAVELOC3
-    JSR CLEAR_REG
-    LD R6, POINTER
-    ADD R6, R6, #0
-    BRNZ STACK_ERROR
-    ADD R6, R6, #-1
-    STR R0, R6, #0
-    ST R6, POINTER
-    LD R7, SAVELOC3
+    ST R7, SAVELOC3          ; Save return address
+    JSR CLEAR_REG            ; Clear registers
+    LD R6, POINTER           ; Load current stack pointer
+    ADD R6, R6, #0           
+    BRNZ STACK_ERROR         ; If stack pointer invalid, halt
+    ADD R6, R6, #-1          ; Move stack pointer down
+    STR R0, R6, #0           ; Store value at new location
+    ST R6, POINTER           ; Update stack pointer
+    LD R7, SAVELOC3          ; Restore return address
     RET
 
 POINTER .FILL X4000
