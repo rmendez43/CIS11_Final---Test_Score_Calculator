@@ -20,6 +20,9 @@
     ; 3. Determine letter grade with GET_LETTER
     ; 4. Output letter grade using POP
 
+; This repeated code block below reads five test scores, stores them
+; in memory, calculates the letter grade, and displays it.
+
     JSR GET_GRADE
     LEA R6, GRADES
     STR R3, R6, #0
