@@ -5,10 +5,20 @@
 ; APRAJITA
 
 .ORIG x3000
+
+; ---- Display welcome message ----
+
     LEA R0, WEL
     PUTS
     LD R0, NEWLINE
     OUT
+
+; ---- Get and process 5 test grades ----
+    ; For each grade:
+    ; 1. Call GET_GRADE to read input
+    ; 2. Store grade in GRADES array
+    ; 3. Determine letter grade with GET_LETTER
+    ; 4. Output letter grade using POP
 
     JSR GET_GRADE
     LEA R6, GRADES
@@ -62,17 +72,24 @@
     JSR CALCULATE_STATS
     HALT
 
-; ========== Statistics Calculation ==========
+; ============================
+; Subroutine: CALCULATE_STATS
+; Calculates and displays max, min, and average of test scores
+; ============================
 
 CALCULATE_STATS
     ST R7, SAVELOC1
     LEA R2, GRADES
     
-    ; Initialize with first grade
+    ; Initialize MIN, MAX, and SUM with first grade
     LDR R3, R2, #0          ; First grade
     ST R3, MAX_GRADE        ; Set as initial max
     ST R3, MIN_GRADE        ; Set as initial min
     ST R3, TOTAL_SUM        ; Start sum
+
+    ; --- Process remaining grades (2–5) ---
+    ; Each block loads a grade, updates sum, checks max/min
+    ; The process is repeated for each grade index (1 to 4)
     
     ; Process grade 2
     LDR R4, R2, #1
