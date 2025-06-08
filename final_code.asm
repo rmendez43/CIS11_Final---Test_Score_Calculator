@@ -113,6 +113,8 @@ SKIP_MAX1
     ST R4, MIN_GRADE         ; Update min grade
 SKIP_MIN1
 
+    ; The same comments above apply to grades 3-5 below
+
     LDR R4, R2, #2           ; Load grade 3
     LD R5, TOTAL_SUM         
     ADD R5, R5, R4           
@@ -244,11 +246,11 @@ NEG_ONE         .FILL #-1                               ; Constant -1
 
 ; ========== Save Locations ==========
 
-SAVELOC1 .FILL x0000
-SAVELOC2 .FILL x0000
-SAVELOC3 .FILL x0000
-SAVELOC4 .FILL x0000
-SAVELOC5 .FILL x0000
+SAVELOC1 .FILL x0000   ; Temporary storage for R7 (return address) or general-purpose registers
+SAVELOC2 .FILL x0000   ; Another save location, commonly for R7 during subroutine calls
+SAVELOC3 .FILL x0000   ; Used to save a register (often R3) during nested subroutine or validation
+SAVELOC4 .FILL x0000   ; Used to store R2 or other temporary data
+SAVELOC5 .FILL x0000   ; Used to store R1 or other temporary data
 
 ; ========== Subroutines ==========
 
