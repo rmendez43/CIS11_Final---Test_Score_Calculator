@@ -409,40 +409,41 @@ F_NUM .FILL #-50
 F_LET .FILL X46    ; 'F'
 
 CLEAR_REG
-    AND R1, R1, #0
-    AND R2, R2, #0
-    AND R3, R3, #0
-    AND R4, R4, #0
-    AND R5, R5, #0
-    AND R6, R6, #0
-    RET
+    AND R1, R1, #0       ; Clear R1
+    AND R2, R2, #0       ; Clear R2
+    AND R3, R3, #0       ; Clear R3
+    AND R4, R4, #0       ; Clear R4
+    AND R5, R5, #0       ; Clear R5
+    AND R6, R6, #0       ; Clear R6
+    RET                 ; Return to caller
+
 
 VALIDATE2
-    ST R1, SAVELOC5
-    ST R2, SAVELOC4
-    ST R3, SAVELOC3
-    LD R1, DATA_MIN
-    ADD R2, R0, R1
-    BRN FAIL
-    LD R1, DATA_MAX
-    ADD R3, R0, R1
-    BRP FAIL
-    LD R1, SAVELOC5
-    LD R2, SAVELOC4
-    LD R3, SAVELOC3
-    RET
+    ST R1, SAVELOC5      ; Save R1
+    ST R2, SAVELOC4      ; Save R2
+    ST R3, SAVELOC3      ; Save R3
+    LD R1, DATA_MIN      ; Load lower bound (-48)
+    ADD R2, R0, R1       ; R2 = R0 - 48
+    BRN FAIL             ; If R0 < 48, invalid input
+    LD R1, DATA_MAX      ; Load upper bound (-57)
+    ADD R3, R0, R1       ; R3 = R0 - 57
+    BRP FAIL             ; If R0 > 57, invalid input
+    LD R1, SAVELOC5      ; Restore R1
+    LD R2, SAVELOC4      ; Restore R2
+    LD R3, SAVELOC3      ; Restore R3
+    RET                  ; Return if input was valid
 
 FAIL
-    LEA R0, FAIL_STR
-    PUTS
-    LD R0, NEWLINE2
-    OUT
-    HALT
+    LEA R0, FAIL_STR     ; Load error message string
+    PUTS                 ; Print error message
+    LD R0, NEWLINE2      ; Load newline character
+    OUT                  ; Print newline
+    HALT                 ; Terminate program
 
 ; If user does not type a number
 
-FAIL_STR  .STRINGZ "WRONG INPUT, PROGRAM TERMINATED"
-DATA_MIN  .FILL #-48
-DATA_MAX  .FILL #-57
-NEWLINE2  .FILL XA
+FAIL_STR  .STRINGZ "WRONG INPUT, PROGRAM TERMINATED" ; Error message
+DATA_MIN  .FILL #-48                                 ; ASCII '0' offset (for min digit)
+DATA_MAX  .FILL #-57                                 ; ASCII '9' offset (for max digit)
+NEWLINE2  .FILL XA                                   ; ASCII newline
 .END
