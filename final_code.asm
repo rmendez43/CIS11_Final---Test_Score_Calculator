@@ -238,27 +238,27 @@ AVG_DONE
 
 ; ========== Data ==========
 
-WEL             .STRINGZ "TEST FIVE SCORES: (0 - 99)"
-NEWLINE         .FILL x000A
-SPACE           .FILL x0020
-DECODE_DEC      .FILL #-48
-DECODE_SYM      .FILL #48
-DECODE_THIRTY   .FILL #-30
-NUM_TESTS       .FILL #5
-MAX_GRADE       .BLKW #1
-MIN_GRADE       .BLKW #1
-AVERAGE_GRADE   .BLKW #1
-TOTAL_SUM       .BLKW #1
-GRADES          .BLKW #5
-MIN             .STRINGZ "MIN "
-MAX             .STRINGZ "MAX "
-AVG             .STRINGZ "AVG "
-ONE             .FILL #1
-TWO             .FILL #2
-THREE           .FILL #3
-FOUR            .FILL #4
-TEN             .FILL #10
-NEG_ONE         .FILL #-1
+WEL             .STRINGZ "TEST FIVE SCORES: (0 - 99)"   ; Welcome message to display
+NEWLINE         .FILL x000A                             ; ASCII newline character
+SPACE           .FILL x0020                             ; ASCII space character
+DECODE_DEC      .FILL #-48                              ; Used to convert ASCII digit to numeric value
+DECODE_SYM      .FILL #48                               ; Used to convert numeric value to ASCII digit
+DECODE_THIRTY   .FILL #-30                              ; Helper constant (not clearly used here)
+NUM_TESTS       .FILL #5                                ; Number of test scores to input
+MAX_GRADE       .BLKW #1                                ; Memory space to store maximum grade
+MIN_GRADE       .BLKW #1                                ; Memory space to store minimum grade
+AVERAGE_GRADE   .BLKW #1                                ; Memory space to store average grade
+TOTAL_SUM       .BLKW #1                                ; Memory space to store sum of all grades
+GRADES          .BLKW #5                                ; Array to store 5 individual test scores
+MIN             .STRINGZ "MIN "                         ; Label to display before printing minimum grade
+MAX             .STRINGZ "MAX "                         ; Label to display before printing maximum grade
+AVG             .STRINGZ "AVG "                         ; Label to display before printing average grade
+ONE             .FILL #1                                ; Constant 1
+TWO             .FILL #2                                ; Constant 2
+THREE           .FILL #3                                ; Constant 3
+FOUR            .FILL #4                                ; Constant 4
+TEN             .FILL #10                               ; Constant 10 (used for division/multiplication)
+NEG_ONE         .FILL #-1                               ; Constant -1
 
 ; ========== Save Locations ==========
 
