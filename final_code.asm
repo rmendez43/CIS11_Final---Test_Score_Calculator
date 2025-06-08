@@ -454,6 +454,8 @@ FAIL
     OUT
     HALT
 
+; If user does not type a number
+
 FAIL_STR  .STRINGZ "WRONG INPUT, PROGRAM TERMINATED"
 DATA_MIN  .FILL #-48
 DATA_MAX  .FILL #-57
